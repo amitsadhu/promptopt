@@ -173,20 +173,20 @@ if st.session_state.comparison_results:
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("### Original Prompt")
-        st.text_area("Original", latest["original_prompt"], height=100, disabled=True)
-        st.markdown("### Response")
-        st.text_area("Original Response", latest["original_response"], height=300, disabled=True)
-        if st.button("Prefer Original"):
+        #st.markdown("### Original Prompt")
+        #st.text_area("Prompt 1",latest["original_prompt"], height=100, disabled=True)
+        #st.markdown("### Response")
+        st.text_area("Response 1",latest["original_response"], height=300, disabled=True)
+        if st.button("Prefer Response 1"):
             st.session_state.comparison_results[-1]["user_preference"] = "original"
             st.success("Preference saved!")
 
     with col2:
-        st.markdown("### Optimized Prompt")
-        st.text_area("Optimized", latest["optimized_prompt"], height=100, disabled=True)
-        st.markdown("### Response")
-        st.text_area("Optimized Response", latest["optimized_response"], height=300, disabled=True)
-        if st.button("Prefer Optimized"):
+        #st.markdown("### Optimized Prompt")
+        #st.text_area("Prompt 2",latest["optimized_prompt"], height=100, disabled=True)
+        #st.markdown("### Response")
+        st.text_area("Response 2",latest["optimized_response"], height=300, disabled=True)
+        if st.button("Prefer Response 2"):
             st.session_state.comparison_results[-1]["user_preference"] = "optimized"
             st.success("Preference saved!")
 
@@ -196,6 +196,6 @@ if st.session_state.comparison_results:
     for i, result in enumerate(reversed(st.session_state.comparison_results[:-1])):
         with st.expander(f"Comparison {len(st.session_state.comparison_results) - i - 1}: {result['timestamp']}"):
             st.markdown(f"**Original Prompt:** {result['original_prompt']}")
-            st.markdown(f"**Optimized Prompt:** {result['optimized_prompt']}")
+            #st.markdown(f"**Optimized Prompt:** {result['optimized_prompt']}")
             st.markdown(f"**User Preference:** {result['user_preference'] or 'Not selected'}")
 

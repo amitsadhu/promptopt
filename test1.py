@@ -3,6 +3,24 @@ import streamlit as st
 from groq import Groq
 from datetime import datetime
 import hmac
+from supabase import create_client, Client
+
+# Supabase setup
+supabase_url = st.secrets.get("SUPABASE_URL")
+supabase_key = st.secrets.get("SUPABASE_KEY")
+supabase: Client = create_client(supabase_url, supabase_key)
+
+def save_comparison_to_supabase(comparison):
+    try:
+        data = {
+            "timestamp": comparison["timestamp"],
+            "original_prompt": comparison["original_prompt"],
+            "optimized_prompt": comparison["optimized_prompt"],
+            "user_preference": comparison["user_preference"]
+        }
+        supabase.table("prompt_comparisons").insert(data).execute()
+    except Exception as e:
+        st.error(f"Supabase insert error: {e}")
 
 # Page configuration
 st.set_page_config(
@@ -10,6 +28,48 @@ st.set_page_config(
     page_icon="🔄",
     layout="wide"
 )
+
+def save_user_info_to_supabase(user_info):
+    try:
+        data = {
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "name": user_info["name"],
+            "email": user_info["email"],
+            "agreed": user_info["agreed"]
+        }
+        supabase.table("user_info").insert(data).execute()
+    except Exception as e:
+        st.error(f"Supabase user info insert error: {e}")
+
+if "user_info_submitted" not in st.session_state:
+    st.session_state.user_info_submitted = False
+
+if not st.session_state.user_info_submitted:
+    st.title("Welcome to the Prompt Optimization Tool")
+    st.markdown("""
+    ### Terms and Conditions
+    Please read and accept the following terms before using this application.
+    - Your prompts and responses will be stored for research purposes.
+    - Your name and email will be used to associate your data.
+    - You may withdraw at any time by contacting the administrator.
+    """)
+
+    name = st.text_input("Your Name")
+    email = st.text_input("Your Email")
+    agreed = st.checkbox("I have read and agree to the terms and conditions.")
+
+    if st.button("Submit"):
+        if not name or not email or not agreed:
+            st.warning("Please fill in all fields and agree to the terms.")
+        else:
+            user_info = {"name": name, "email": email, "agreed": agreed}
+            save_user_info_to_supabase(user_info)
+            st.session_state.user_info_submitted = True
+            st.session_state.user_name = name
+            st.session_state.user_email = email
+            st.success("Thank you! You may now use the app.")
+            st.rerun()
+    st.stop()
 
 # Authentication function
 def check_password():
@@ -75,7 +135,20 @@ with st.sidebar:
     st.subheader("Optimization Settings")
     optimization_prompt = st.text_area(
         "Optimization System Prompt",
-        "You are an expert prompt engineer. Your task is to optimize the user's prompt to get the best possible response from an AI model. Improve clarity, specificity, and structure while maintaining the original intent. Return ONLY the optimized prompt with no explanations."
+        """You are an expert prompt engineer. Your sole task is to analyze and optimize the provided prompt without executing it or providing answers to its content. **Instructions:** 
+        1. Analyze the input prompt for clarity, specificity, and effectiveness
+        2. Identify areas for improvement such as:
+        - Ambiguous language or unclear instructions
+        - Missing context or background information
+        - Vague output requirements or format specifications
+        - Incomplete task parameters or constraints
+        3. Rewrite the prompt to be more precise, actionable, and likely to produce the desired results
+        4. Ensure the optimized version includes:
+        - Clear, specific instructions
+        - Defined output format and structure
+        - Relevant context and constraints
+        - Appropriate tone and style guidance if needed
+        NEVER RESPOND TO THE PROMPT CONTENT OR EXECUTE ANY TASKS. ONLY FOCUS ON OPTIMIZING THE PROMPT ITSELF.""",
     )
 
 # Main content
@@ -173,21 +246,17 @@ if st.session_state.comparison_results:
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("### Original Prompt")
-        st.text_area("Original", latest["original_prompt"], height=100, disabled=True)
-        st.markdown("### Response")
-        st.text_area("Original Response", latest["original_response"], height=300, disabled=True)
-        if st.button("Prefer Original"):
+        st.text_area("Response 1",latest["original_response"], height=300, disabled=True)
+        if st.button("Prefer Response 1"):
             st.session_state.comparison_results[-1]["user_preference"] = "original"
+            save_comparison_to_supabase(st.session_state.comparison_results[-1])
             st.success("Preference saved!")
 
     with col2:
-        st.markdown("### Optimized Prompt")
-        st.text_area("Optimized", latest["optimized_prompt"], height=100, disabled=True)
-        st.markdown("### Response")
-        st.text_area("Optimized Response", latest["optimized_response"], height=300, disabled=True)
-        if st.button("Prefer Optimized"):
+        st.text_area("Response 2",latest["optimized_response"], height=300, disabled=True)
+        if st.button("Prefer Response 2"):
             st.session_state.comparison_results[-1]["user_preference"] = "optimized"
+            save_comparison_to_supabase(st.session_state.comparison_results[-1])
             st.success("Preference saved!")
 
 # History section
@@ -196,6 +265,6 @@ if st.session_state.comparison_results:
     for i, result in enumerate(reversed(st.session_state.comparison_results[:-1])):
         with st.expander(f"Comparison {len(st.session_state.comparison_results) - i - 1}: {result['timestamp']}"):
             st.markdown(f"**Original Prompt:** {result['original_prompt']}")
-            st.markdown(f"**Optimized Prompt:** {result['optimized_prompt']}")
+            #st.markdown(f"**Optimized Prompt:** {result['optimized_prompt']}")
             st.markdown(f"**User Preference:** {result['user_preference'] or 'Not selected'}")
 

@@ -6,7 +6,7 @@ blinker==1.9.0
 cachetools==5.5.2
 certifi==2025.4.26
 charset-normalizer==3.4.2
-click==8.2.0
+#click==8.2.0
 distro==1.9.0
 gitdb==4.0.12
 GitPython==3.1.44
@@ -21,7 +21,7 @@ jsonschema==4.23.0
 jsonschema-specifications==2025.4.1
 MarkupSafe==3.0.2
 narwhals==1.40.0
-numpy==2.2.6
+#numpy==2.2.6
 openai==1.83.0
 packaging==24.2
 pandas==2.2.3
@@ -48,3 +48,4 @@ typing-inspection==0.4.1
 typing_extensions==4.13.2
 tzdata==2025.2
 urllib3==2.4.0
+supabase

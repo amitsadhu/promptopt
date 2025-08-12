@@ -80,7 +80,7 @@ if "user_info_submitted" not in st.session_state:
 if not st.session_state.user_info_submitted:
     st.title("Welcome to the Prompt Optimization Tool")
     st.markdown("""
-### Terms and Conditions
+### Informed Consent
 Please read and accept the following terms before using this application.
 - Your prompts and responses will be stored for research purposes.
 - Your name and email will be used to associate your data.
@@ -188,7 +188,7 @@ task = TASKS[task_idx]
 
 st.header(f"Task {task_idx+1}: {task['title']}")
 st.markdown(f"**Objective:** {task['objective']}")
-st.markdown(f"**Scenario:** {task['scenario']}")
+st.markdown(f"**Example prompt:** {task['example prompt']}")
 
 user_prompt = st.text_area("Enter your prompt for this task:", key=f"prompt_{task_idx}")
 

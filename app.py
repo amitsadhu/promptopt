@@ -117,11 +117,10 @@ In this study, personal and personal data are collected for our research. The us
 If you have any questions or concerns about the research, please feel free to contact:
 
 **Researchers**
-- Amit Ephraim Sadhu (amit.sadhu@stud.fra-uas.de)
-- Joseph Anthony (joseph.antony@stud.fra-uas.de)
-- Ramya Sai Murali (ramya.sai-murali@stud.fra-uas.de)  
+                
+Amit Ephraim Sadhu (amit.sadhu@stud.fra-uas.de), Joseph Anthony (joseph.antony@stud.fra-uas.de), Ramya Sai Murali (ramya.sai-murali@stud.fra-uas.de)  
 
-    Frankfurt University of Applied Sciences
+Frankfurt University of Applied Sciences
 
 **Principal investigator**
 

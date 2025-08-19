@@ -131,7 +131,7 @@ Nibelungenplatz 1
 60318 Frankfurt am Main, Germany                
 """)
     agreed = st.checkbox("I have read and agree to all the statements above")
-    
+
     st.markdown("### Demographic Questionnaire")
     name = st.text_input("Your name")
     email = st.text_input("Your student email")
@@ -146,7 +146,9 @@ Nibelungenplatz 1
         ["Highly experienced", "Have some experience", "No experience"]
         )
 
-    submit_disabled = not agreed
+    submit_disabled = not (
+        agreed and name and email and age and nationality and occupation and ai_experience
+    )
     if st.button("Submit", disabled=submit_disabled):
         if not name or not email or not age or not nationality or not occupation or not ai_experience:
             st.warning("Please fill in all fields.")
@@ -333,4 +335,35 @@ if st.session_state.task_completed[task_idx]:
                 st.session_state.current_task += 1
                 st.rerun()
             else:
+                st.session_state.final_survey_ready = True
+                st.rerun()
+                
+    # --- Final Survey ---
+    if st.session_state.get("final_survey_ready", False):
+        st.header("Final Survey")
+        q1 = st.text_area("1. What do you think about the prompt optimization system?", key="final_q1")
+        q2 = st.text_area("2. How would you improve it?", key="final_q2")
+        q3 = st.text_area("3. What did you like about it? Any positives?", key="final_q3")
+        q4 = st.text_area("4. What did you not like about it? Any negatives?", key="final_q4")
+        q5 = st.text_area("5. Did the system lag at any point in time? Can you give an example?", key="final_q5")
+        q6 = st.text_area("6. Did you use any strategies to optimize your prompts manually?", key="final_q6")
+
+        all_final_filled = all([q1, q2, q3, q4, q5, q6])
+        if st.button("Submit Final Survey", disabled=not all_final_filled):
+            final_survey_data = {
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "user_id": st.session_state.user_email,
+            "q1": q1,
+            "q2": q2,
+            "q3": q3,
+            "q4": q4,
+            "q5": q5,
+            "q6": q6
+            }
+            try:
+                supabase.table("final_surveys").insert(final_survey_data).execute()
                 st.success("All tasks completed! Thank you for your participation.")
+                st.session_state.final_survey_ready = False  # Hide after submission
+            except Exception as e:
+                st.error(f"Supabase final survey insert error: {e}")
+        st.stop()

@@ -128,11 +128,45 @@ Prof. Dr. Valentin Schwind (valentin.schwind@fra-uas.de)
                 
 Frankfurt University of Applied Sciences  
 Nibelungenplatz 1  
-60318 Frankfurt am Main, Germany  
+60318 Frankfurt am Main, Germany                
 """)
+    agreed = st.checkbox("I have read and agree to all the statements above")
+    
+    st.markdown("### Demographic Questionnaire")
     name = st.text_input("Your name")
     email = st.text_input("Your student email")
-    agreed = st.checkbox("I have read and agree to all the statements above")
+    age = st.text_input("Your age")
+    nationality = st.text_input("Your nationality")
+    occupation = st.selectbox(
+            "Your occupation",
+            ["Student (Bachelors)", "Student (Masters)", "Other"]
+        )
+    ai_experience = st.radio(
+        "Your experience with AI systems",
+        ["Highly experienced", "Have some experience", "No experience"]
+        )
+
+    submit_disabled = not agreed
+    if st.button("Submit", disabled=submit_disabled):
+        if not name or not email or not age or not nationality or not occupation or not ai_experience:
+            st.warning("Please fill in all fields.")
+        else:
+            user_info = {
+                "name": name,
+                "email": email,
+                "age": age,
+                "nationality": nationality,
+                "occupation": occupation,
+                "ai_experience": ai_experience,
+                "agreed": agreed
+            }
+            save_user_info_to_supabase(user_info)
+            st.session_state.user_info_submitted = True
+            st.session_state.user_name = name
+            st.session_state.user_email = email
+            st.success("Thank you! You may now use the app.")
+            st.rerun()
+    st.stop()
 
     submit_disabled = not agreed
     if st.button("Submit", disabled=submit_disabled):

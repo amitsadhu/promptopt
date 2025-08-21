@@ -15,6 +15,10 @@ def save_user_info_to_supabase(user_info):
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "name": str(user_info["name"]),
             "email": str(user_info["email"]),
+            "age": str(user_info["age"]),
+            "nationality": str(user_info["nationality"]),
+            "occupation": str(user_info["occupation"]),
+            "ai_experience": str(user_info["ai_experience"]),
             "agreed": bool(user_info["agreed"])
         }
         supabase.table("user_info").insert(data).execute()

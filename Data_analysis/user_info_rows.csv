@@ -1,0 +1,33 @@
+anon_id,id,timestamp,agreed,age,nationality,occupation,ai_experience
+P020,24,2025-08-21 00:17:48,True,,,,
+P009,25,2025-08-21 08:42:33,True,,Indian,,
+P004,28,2025-08-21 13:25:47,True,22,Pakistan,Student (Masters),Have some experience
+P004,29,2025-08-21 13:32:49,True,22,Pakistan,Student (Masters),Have some experience
+P016,30,2025-08-21 13:57:17,True,27,Pakistan,Student (Masters),Have some experience
+P005,31,2025-08-21 14:48:03,True,27,Indian,Student (Masters),Highly experienced
+P013,32,2025-08-21 15:17:35,True,24,Nepalese,Student (Masters),Have some experience
+P017,33,2025-08-21 16:22:49,True,24,Indian,Student (Masters),Have some experience
+P015,34,2025-08-21 19:26:01,True,27,Indian,Student (Masters),Have some experience
+P010,35,2025-08-22 10:09:14,True,26,Pakistan,Student (Masters),Have some experience
+P006,36,2025-08-22 13:20:56,True,23,Indian,Student (Masters),Highly experienced
+P007,37,2025-08-22 19:38:55,True,27,Bangladeshi,Student (Masters),Highly experienced
+P001,38,2025-08-23 21:00:13,True, ,,Student (Bachelors),Have some experience
+P028,39,2025-08-23 21:08:55,True,28,Bangladeshi,Student (Masters),Have some experience
+P002,40,2025-08-23 21:10:07,True,  ,,Student (Bachelors),Highly experienced
+P008,41,2025-08-23 21:23:55,True,24,Indian,Student (Masters),Highly experienced
+P022,42,2025-08-24 14:16:42,True,27,Indian,Other,Highly experienced
+P022,43,2025-08-24 14:33:44,True,27,Indian,Other,Highly experienced
+P023,44,2025-08-24 16:48:38,True,28,Bangladeshi,Student (Masters),Have some experience
+P014,45,2025-08-24 16:55:58,True,27,Indian,Student (Masters),Have some experience
+P019,46,2025-08-24 17:39:59,True,27,Indian,Student (Bachelors),Have some experience
+P014,47,2025-08-24 18:02:59,True,27,Indian,Student (Masters),Have some experience
+P003,48,2025-08-25 05:01:43,True,  ,,Student (Bachelors),Highly experienced
+P025,49,2025-08-25 14:07:44,True,23,Indian,Other,Highly experienced
+P029,50,2025-08-25 19:01:36,True,31,Indian,Other,No experience
+P011,51,2025-08-25 19:08:35,True,28,Indian,Other,Have some experience
+P026,52,2025-08-25 19:13:30,True,28,Indian,Student (Masters),No experience
+P018,53,2025-08-25 19:14:34,True,24,Indian,Student (Bachelors),Have some experience
+P027,54,2025-08-25 20:37:15,True,29,Indian,Student (Masters),No experience
+P024,55,2025-08-25 20:46:51,True,29,Indian,Student (Masters),No experience
+P021,56,2025-08-26 11:23:24,True,21,Indian,Other,Have some experience
+P012,57,2025-08-26 11:23:50,True,23,Indian,Student (Bachelors),Have some experience
